@@ -20,5 +20,12 @@ export default {
     },
     rules: {
         'prettier/prettier': ['error', prettierConfig]
-    }
+    },
+    settings: {
+        'import/resolver': {
+          node: {
+            extensions: ['.js', '.jsx', '.ts', '.tsx'],
+          },
+        },
+      },
   }
