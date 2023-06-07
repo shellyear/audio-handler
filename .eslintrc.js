@@ -12,6 +12,7 @@ export default {
         'plugin:prettier/recommended',
         "plugin:react-hooks/recommended" 
     ],
+    parser: '@typescript-eslint/parser',
     plugins: ['react', 'react-hooks', 'import', 'prettier'],
     parserOptions: {
         "ecmaVersion": "latest",
