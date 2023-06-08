@@ -20,11 +20,23 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    // Import plugin
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        tsx: 'never',
+        ts: 'never'
+      }
+    ],
     'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': ['error', prettierConfig]
   },
   settings: {
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
     'import/resolver': {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
