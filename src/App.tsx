@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useRef } from 'react'
+import song from './static/Karacaoglan.mp3'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function useHandleAudio() {
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const audioCtxRef = useRef<AudioContext>(new AudioContext())
+  const audioCtx = audioCtxRef.current
+
+  useEffect(() => {
+    if (audioRef.current && !(audioRef.current.src || audioRef.current.srcObject)) {
+      const source: MediaElementAudioSourceNode = audioCtx.createMediaElementSource(audioRef.current)
+      source.connect(audioCtx.destination)
+    }
+
+    return () => {
+      if (['running', 'suspended'].includes(audioCtx.state)) {
+        audioCtx.close()
+      }
+    }
+  }, [audioCtx])
+
+  return {
+    audioRef
+  }
 }
 
-export default App;
+function App() {
+  const { audioRef } = useHandleAudio()
+
+  return (
+    <div className="flex h-screen grow flex-col items-center justify-center">
+      <audio ref={audioRef} controls src={song}>
+        {/* <source src={song} type="audio/mpeg" /> */}
+        Your browser does not support the audio tag.
+      </audio>
+    </div>
+  )
+}
+
+export default App

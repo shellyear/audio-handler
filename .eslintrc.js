@@ -33,7 +33,8 @@ module.exports = {
     ],
     'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
     'react/react-in-jsx-scope': 'off',
-    'prettier/prettier': ['error', prettierConfig]
+    'prettier/prettier': ['error', prettierConfig],
+    'jsx-a11y/media-has-caption': 'off'
   },
   settings: {
     'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
