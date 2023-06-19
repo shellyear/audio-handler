@@ -14,7 +14,7 @@ module.exports = {
     'plugin:react-hooks/recommended'
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['react', 'react-hooks', 'import', 'prettier'],
+  plugins: ['react', 'react-hooks', 'import', 'prettier', 'simple-import-sort'],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module'
@@ -34,7 +34,8 @@ module.exports = {
     'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': ['error', prettierConfig],
-    'jsx-a11y/media-has-caption': 'off'
+    'jsx-a11y/media-has-caption': 'off',
+    'import/prefer-default-export': 'off' // Named exports are easier to refactor & have better support in IDE
   },
   settings: {
     'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
