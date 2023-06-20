@@ -1,7 +1,6 @@
-import { ChangeEvent, SyntheticEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import song from './static/Karacaoglan.mp3'
-import { round } from './tools'
 
 const Container = styled.div`
   display: flex;
@@ -14,7 +13,7 @@ const PlayPauseButton = styled.button.attrs({
   role: 'switch'
 })``
 
-function useHandleAudio() {
+function useCreateAudio() {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const audioCtxRef = useRef<AudioContext | null>(null)
   if (audioCtxRef.current === null) {
@@ -39,20 +38,18 @@ function useHandleAudio() {
   }
 }
 
-function useAudioProgressBar(audio: HTMLAudioElement | null) {
-  const [progress, setProgress] = useState(0)
+function useHandleAudio(audio: HTMLAudioElement | null) {
+  const [currentTime, setCurrentTime] = useState(0)
 
   const handleAudioTimeUpdate = (e: SyntheticEvent<HTMLAudioElement>) => {
-    const { currentTime, duration } = e.currentTarget
-    const newProgress = round((currentTime / duration) * 100, 1)
-    setProgress(newProgress)
+    const { currentTime: elementCurrentTime } = e.currentTarget
+    setCurrentTime(elementCurrentTime)
   }
 
   const handleCurrentTimeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value)
-
     if (audio) {
-      const newCurrentTime = (audio.duration / 100) * Number(value)
+      const newCurrentTime = parseFloat(e.target.value)
+      setCurrentTime(newCurrentTime)
       audio.currentTime = newCurrentTime
     }
   }
@@ -60,7 +57,7 @@ function useAudioProgressBar(audio: HTMLAudioElement | null) {
   return {
     handleAudioTimeUpdate,
     handleCurrentTimeChange,
-    progress
+    currentTime
   }
 }
 
@@ -86,9 +83,9 @@ function usePlayPauseButton(audioCtx: AudioContext, audioElement: HTMLAudioEleme
 }
 
 function App() {
-  const { audioRef, audioCtx } = useHandleAudio()
+  const { audioRef, audioCtx } = useCreateAudio()
+  const { handleAudioTimeUpdate, handleCurrentTimeChange, currentTime } = useHandleAudio(audioRef.current)
   const { isPlaying, handlePlayPause } = usePlayPauseButton(audioCtx, audioRef.current)
-  const { handleAudioTimeUpdate, handleCurrentTimeChange, progress } = useAudioProgressBar(audioRef.current)
 
   return (
     <Container>
@@ -100,9 +97,9 @@ function App() {
         type="range"
         id="audio-progress-bar"
         min={0}
-        max={100}
-        step={0.1}
-        value={progress}
+        max={audioRef.current?.duration}
+        step={0.01}
+        value={currentTime}
         onChange={handleCurrentTimeChange}
       />
     </Container>
