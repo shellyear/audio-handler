@@ -54,10 +54,18 @@ function useHandleAudio(audio: HTMLAudioElement | null) {
     }
   }
 
+  const handleVolumeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (audio) {
+      const newVolume = parseFloat(e.target.value)
+      audio.volume = newVolume
+    }
+  }
+
   return {
     handleAudioTimeUpdate,
     handleCurrentTimeChange,
-    currentTime
+    currentTime,
+    handleVolumeChange
   }
 }
 
@@ -84,7 +92,9 @@ function usePlayPauseButton(audioCtx: AudioContext, audioElement: HTMLAudioEleme
 
 function App() {
   const { audioRef, audioCtx } = useCreateAudio()
-  const { handleAudioTimeUpdate, handleCurrentTimeChange, currentTime } = useHandleAudio(audioRef.current)
+  const { handleAudioTimeUpdate, handleCurrentTimeChange, currentTime, handleVolumeChange } = useHandleAudio(
+    audioRef.current
+  )
   const { isPlaying, handlePlayPause } = usePlayPauseButton(audioCtx, audioRef.current)
 
   return (
@@ -102,6 +112,7 @@ function App() {
         value={currentTime}
         onChange={handleCurrentTimeChange}
       />
+      <input type="range" id="audio-volume-bar" min={0} max={1} step={0.01} onChange={handleVolumeChange} />
     </Container>
   )
 }

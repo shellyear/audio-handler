@@ -35,7 +35,8 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': ['error', prettierConfig],
     'jsx-a11y/media-has-caption': 'off',
-    'import/prefer-default-export': 'off' // Named exports are easier to refactor & have better support in IDE
+    'import/prefer-default-export': 'off', // Named exports are easier to refactor & have better support in IDE
+    'no-param-reassign': 'off'
   },
   settings: {
     'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
