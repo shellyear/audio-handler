@@ -73,15 +73,17 @@ function usePlayPauseButton(audioCtx: AudioContext, audioElement: HTMLAudioEleme
   const [isPlaying, setIsPlaying] = useState(false)
 
   useEffect(() => {
-    if (audioElement && audioCtx) {
-      if (audioElement.paused) audioElement.play()
-      else if (!audioElement.paused) audioElement.pause()
+    if (audioElement) {
+      if (isPlaying) audioElement.play()
+      else if (!isPlaying) audioElement.pause()
     }
-  }, [audioCtx, audioElement, isPlaying])
+  }, [audioElement, isPlaying])
 
   const handlePlayPause = () => {
     if (!isPlaying) setIsPlaying(true)
-    else if (isPlaying) setIsPlaying(false)
+    else if (isPlaying) {
+      setIsPlaying(false)
+    }
   }
 
   return {
