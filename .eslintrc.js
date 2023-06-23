@@ -43,7 +43,10 @@ module.exports = {
     'prettier/prettier': ['error', prettierConfig],
     'jsx-a11y/media-has-caption': 'off',
     'import/prefer-default-export': 'off', // Named exports are easier to refactor & have better support in IDE
-    'no-param-reassign': 'off'
+    'no-param-reassign': 'off',
+
+    // defaultProps are not used in that project
+    'react/require-default-props': 'off'
   },
   settings: {
     'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
