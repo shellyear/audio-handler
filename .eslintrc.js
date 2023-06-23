@@ -31,6 +31,13 @@ module.exports = {
         ts: 'never'
       }
     ],
+    'import/order': [
+      'error',
+      {
+        groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
+        'newlines-between': 'always'
+      }
+    ],
     'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': ['error', prettierConfig],
