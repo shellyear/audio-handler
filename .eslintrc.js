@@ -20,6 +20,7 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    'prettier/prettier': ['error', prettierConfig],
     // Import plugin
     'import/extensions': [
       'error',
@@ -38,15 +39,19 @@ module.exports = {
         'newlines-between': 'always'
       }
     ],
+    'import/no-extraneous-dependencies': 'off', // Skip check for dependencies vs devDependencies
+    'import/prefer-default-export': 'off', // Named exports are easier to refactor & have better support in IDE
+
     'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
     'react/react-in-jsx-scope': 'off',
-    'prettier/prettier': ['error', prettierConfig],
     'jsx-a11y/media-has-caption': 'off',
-    'import/prefer-default-export': 'off', // Named exports are easier to refactor & have better support in IDE
     'no-param-reassign': 'off',
 
-    // defaultProps are not used in that project
-    'react/require-default-props': 'off'
+    'react/require-default-props': 'off', // defaultProps are not used in that project
+    'react/jsx-props-no-spreading': 'off', // allow spreading props
+
+    // probably will be enabled (?)
+    'no-shadow': 'off'
   },
   settings: {
     'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
